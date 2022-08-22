@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Install modules
-      run: yarn
+      run: yarn && yarn lint
     - name: Run ESLint
       run: yarn lint
     
