@@ -4,7 +4,7 @@ export class UserDTO  {
     updatedAt?: Date | string
     email: string
     name?: string | null
-    password?: string | null
+    password?: string
 
     constructor(user: UserDTO){
       this.createdAt = user.createdAt
