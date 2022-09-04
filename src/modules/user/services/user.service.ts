@@ -36,12 +36,12 @@ export class UsersService {
     });
   }
 
-  async findOneByEmail(email: string): Promise<UserDTO | null> {
+  async findOneByEmail(email: string): Promise<UserDTO> {
     return await this.prismaService.user.findFirst({
       where: {
         email,
       },      
-    });
+    }) as UserDTO;
   }
 
   async create(user: UserDTO): Promise<UserDTO> {
