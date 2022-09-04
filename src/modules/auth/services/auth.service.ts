@@ -1,7 +1,7 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { UsersService } from '../../user/services';
 import { JwtService } from '@nestjs/jwt';
-import { UtilsService } from 'src/common/utils.service';
+import { UtilsService } from '../../../common/utils.service';
 
 interface TokenDecodeDto {
   id: string;
