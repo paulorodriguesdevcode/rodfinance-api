@@ -8,8 +8,8 @@ import {
 } from '@nestjs/common';
 import { MovementService } from '../services/movement.service';
 import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard';
-import { AuthService } from 'src/modules/auth/services';
-import { IMovementsBalance, MovementDTO } from '../dto';
+import { IReturnBalance, MovementDTO } from '../dto';
+import { AuthService } from '../../auth/services';
 
 @Controller('movements')
 @UseGuards(JwtAuthGuard)
@@ -20,14 +20,17 @@ export class MovementController {
   ) {}
 
   @Get()
-  findAll(@Headers('Authorization') token: string): Promise<IMovementsBalance> {
+  findAll(@Headers('Authorization') token: string): Promise<IReturnBalance> {
     const { id } = this.authService.decode(token);
     return this.movementService.findAll(id);
   }
 
   @Post()
-  create(@Body() createMovement: MovementDTO, @Headers('Authorization') token: string) {
+  create(
+    @Body() createMovement: MovementDTO,
+    @Headers('Authorization') token: string,
+  ) {
     const { id } = this.authService.decode(token);
-    return this.movementService.create(id,createMovement);
+    return this.movementService.create(id, createMovement);
   }
 }

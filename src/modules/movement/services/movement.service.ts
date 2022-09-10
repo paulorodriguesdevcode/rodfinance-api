@@ -32,11 +32,7 @@ export class MovementService {
   async create(userId: string, dto: MovementDTO) {
     dto.userId = userId;
     await this.prismaService.movement.create({
-      data: {
-        category: dto.category,
-        value: dto.value,
-        userId: dto.userId,
-      },
+      data: dto,
     });
   }
 }

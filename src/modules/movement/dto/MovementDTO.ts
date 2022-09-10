@@ -1,14 +1,4 @@
-import { Movement } from "@prisma/client";
-
-enum BalanceTypeEnum {
-  INPUT,
-  OUTPUT,
-}
-
-export interface IMovementsBalance {
-  totalDeposits:number, 
-  totalWithdrawals:number
-}
+import { Movement, TypeMoviment } from "@prisma/client";
 
 export interface IReturnBalance {
   totalDeposits: number;
@@ -23,7 +13,7 @@ export class MovementDTO {
   updatedAt?: Date | string;
   userId: string;
   value: number;
-  type: BalanceTypeEnum
+  type: TypeMoviment
   category: string;
 
   constructor(movement: MovementDTO) {
