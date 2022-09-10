@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE `movements` ADD COLUMN `type` ENUM('INPUT', 'OUTPUT') NOT NULL DEFAULT 'INPUT';
