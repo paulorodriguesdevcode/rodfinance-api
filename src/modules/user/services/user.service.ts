@@ -1,11 +1,12 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { User } from '@prisma/client';
 import { UtilsService } from 'src/common/utils.service';
 import { PrismaService } from 'src/database/PrismaService';
-import { UserDTO } from '../dto';
+import { CreateOrUpdateUserDTO, UserDTO } from '../dto';
 
 @Injectable()
 export class UsersService {
-  constructor(private prismaService: PrismaService) {}
+  constructor(private prismaService: PrismaService) { }
 
   async findAll(): Promise<UserDTO[]> {
     return await this.prismaService.user.findMany({
@@ -36,15 +37,15 @@ export class UsersService {
     });
   }
 
-  async findOneByEmail(email: string): Promise<UserDTO | null> {
+  async findOneByEmail(email: string): Promise<User | null> {
     return await this.prismaService.user.findFirst({
       where: {
         email,
-      },      
+      },
     });
   }
 
-  async create(user: UserDTO): Promise<UserDTO> {
+  async create(user: CreateOrUpdateUserDTO): Promise<UserDTO> {
     const userAlreadyExists = await this.prismaService.user.findFirst({
       where: {
         email: user.email,
@@ -57,8 +58,12 @@ export class UsersService {
 
     user.password = UtilsService.generateHash(user.password);
 
-    return await this.prismaService.user.create({ 
-      data: user,
+    return await this.prismaService.user.create({
+      data: {
+        email: user.email,
+        name: user.name,
+        password: user.password,
+      },
       select: {
         id: true,
         name: true,
@@ -66,16 +71,20 @@ export class UsersService {
         email: true,
         password: false,
         updatedAt: true,
-      }, 
+      },
     });
   }
 
-  async update(id: string, user: UserDTO): Promise<UserDTO> {
+  async update(id: string, user: CreateOrUpdateUserDTO): Promise<UserDTO> {
+    if (user.password) {
+      user.password = UtilsService.generateHash(user.password);
+    }
+
     return await this.prismaService.user.update({
       where: {
         id,
       },
-      data: new UserDTO(user),
+      data: user,
       select: {
         id: true,
         name: true,
