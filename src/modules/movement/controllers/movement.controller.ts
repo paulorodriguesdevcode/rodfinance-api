@@ -17,7 +17,7 @@ export class MovementController {
   constructor(
     private readonly movementService: MovementService,
     private readonly authService: AuthService,
-  ) {}
+  ) { }
 
   @Get()
   findAll(@Headers('Authorization') token: string): Promise<IReturnBalance> {
