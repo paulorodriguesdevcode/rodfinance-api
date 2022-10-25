@@ -15,6 +15,7 @@ export class MovementDTO {
   value: number;
   type: TypeMoviment
   category: string;
+  description: string;
 
   constructor(movement: MovementDTO) {
     this.createdAt = movement.createdAt;
@@ -24,5 +25,6 @@ export class MovementDTO {
     this.type = movement.type;
     this.value = movement.value;
     this.category = movement.category;
+    this.description = movement.description;
   }
 }
