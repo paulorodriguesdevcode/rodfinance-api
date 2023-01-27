@@ -35,7 +35,7 @@ model Movement {
   user        User     @relation(fields: [userId], references: [id])
   value       Float
   category    String 
-  description    String 
+  description String
   type       TypeMoviment @default(INPUT)
 
   @@map("movements")
